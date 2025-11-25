@@ -1,0 +1,5 @@
+sqlite3              #usually built-in but optional
+chromadb             #chroma db package
+google-generativeai  #google's generative AI client
+python-dotenv        #for reading .env files
+pickle5              #only if you want pickle5 features instead of built-in pickle

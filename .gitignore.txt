@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#environment variables
+.env
+
+#chroma database folder
+chroma_db/
+
+
+#pickle files
+embeddings.pkl
+book_texts.pkl
+
+
+#SQLite databse
+books.db
