@@ -63,11 +63,17 @@ print("\ngenerated embeddings for all books!\n")
 ###
 import pickle
 
-with open("embeddings.pkl", "wb") as f:
-    pickle.dump(embeddings, f) #saving embeddings list as a pickle file
+#saving both in a dictionary format instead of list of tuples for easier access later
+data_to_save = {
+    "titles": book_texts,
+    "embeddings": embeddings
+}
 
-with open("book_texts.pkl", "wb") as f:
-    pickle.dump(book_texts, f) #saving book_texts list as a pickle file
+#finally saving to pickle
+with open("embeddings.pkl", "wb") as f:
+    pickle.dump(data_to_save, f)
+
+print("Embeddings and titles saved successfully!")
 print("----------------------------------------------------")
 print("\nSaved embeddings and book texts as pickle files!")
 
