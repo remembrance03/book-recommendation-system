@@ -24,18 +24,11 @@ data = {
     "embeddings": []
 }
 
-for book_id, emb in embeddings:
-    data["ids"].append(str(book_id))  ##chroma requires string ids so converting ids to string
-    text = next(text for i, text in book_texts if i == book_id)  # #getting the combined text for the book id and appends the text whose id matches book_id
-    data["documents"].append(text) #appending combined text for the book
-    data["embeddings"].append(emb) #appending embedding vector for the book
-
-
-#inserting into chroma collection all at once
 collection.add(
-    ids=data["ids"],
-    embeddings=data["embeddings"],
-    documents=data["documents"] 
+     ids=[str(i) for i in range(len(book_texts))],  ##chroma requires string ids so converting ids to string
+    documents=book_texts,  # #getting the combined text for the book id and appends the text whose id matches book_id
+    embeddings=embeddings
 )
+
 
 print("stored embeddings in ChromaDB!!!")
