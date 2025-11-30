@@ -12,10 +12,10 @@ EMBEDDINGS_PICKLE = "embeddings.pkl"  #local embeddings file
 with open(EMBEDDINGS_PICKLE, "rb") as f:
     saved_data = pickle.load(f)
 
-book_titles = saved_data["titles"]          #list of book titles
-book_embeddings = saved_data["embeddings"]  #numpy(numeric) vectors
+vector = [emb[1] for emb in saved_data["embeddings"]]  #extracting only the vectors  
+book_texts = book_texts = [text for (_, text) in saved_data["titles"]]    #only the string text from (id, text) tuples
 
-print("loaded embeddings for", len(book_titles), "books.") 
+print("loaded embeddings for", len(book_texts), "books.") 
 
 #testing
 # print(type(book_embeddings[0]))
@@ -51,11 +51,10 @@ genai.configure(api_key=api_key) #using api key to authenticate
 ###
 #finally trying to find similar books based on user query
 ###
-def recommend_books(user_query, top_k=5, similarity_threshold=25):   #top_k: number of similar books to return 
+def recommend_books(user_query, top_k=5, similarity_threshold=1.0):   #top_k: number of similar books to return 
                                                                     #similarity_threshold: higher number means less similar; 0.0(perfect match) to 1.0(no similarity at all)
     """
-    Recommend books based on user query using:
-    SQL exact match and RAG semantic search using Gemini embeddings
+     Recommend books based on user query using Gemini embeddings and ChromaDB semantic search filtering by similarity_threshold.
     """
 
     #generating embedding for user query for semantic search
@@ -73,33 +72,43 @@ def recommend_books(user_query, top_k=5, similarity_threshold=25):   #top_k: num
         include=["documents", "distances"] #includes document texts and their ids of top searches
     )
 
+    docs=results["documents"][0]  #extracting document texts of top matches from results
     distances = results["distances"][0] #extracting distances of top matches from results
-    best_distance = distances[0]  #smallest distance value (most similar book)
 
     #testing
-    print("Distance test:")
-    test = collection.query(
-        query_embeddings=[book_embeddings[0][1]],
-        n_results=3,
-        include=["distances", "documents"]
-)
-    print(test)
+#     print("Distance test:")
+#     test = collection.query(
+#         query_embeddings=[book_embeddings[0][1]],
+#         n_results=3,
+#         include=["distances", "documents"]
+# )
+#     print(test)
 
-    if best_distance > similarity_threshold:  #if even the best match is not similar enough
-        return ["Sorry:( we couldn't find any books that match your query in our database. Please try a different query."]
+    #filtering results by distance threshold 
+    recommended = []
+    for i in range(len(docs)):
+        dist = distances[i]
+        if dist <= similarity_threshold:
+            recommended.append((docs[i], dist))
 
-    #extracting recommended books from results of top matches
-    #chroma db stores multiple query vector all at once so results are stored..
-    #in this format: {"ids": [[id1, id2, id3, ...]],
-                    #"documents": [[doc1, doc2, doc3, ...]],
-                    #"embeddings": [[vector1, vector2, vector3, ...]]
-                    # }
-    #since we only asked one query vector(documents and not its ids) (eg: "documents": [[doc1, doc2..]] ) we take the first element:[0]
-    #which results in just [doc1, doc2, doc3,...] for easier access
-    else: 
-        recommended = results["documents"][0]    
-        return recommended  
+    # Sort by distance (closest first) using basic loops
+    for i in range(len(recommended)):
+        for j in range(len(recommended) - i - 1):
+            if recommended[j][1] > recommended[j + 1][1]:
+                recommended[j], recommended[j + 1] = recommended[j + 1], recommended[j]
 
+    #extracting recommended documents from sorted filtered list            
+    recommended_books = []
+    for item in recommended:
+        recommended_books.append(item[0])
+
+
+    #if none passed the threshold
+    if len(recommended_books) == 0:
+        return ["Sorry :( We couldn't find any books that match your query in our database. Please try a different query."]
+
+    
+    return recommended_books
 
 
 ###
