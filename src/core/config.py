@@ -25,9 +25,15 @@ class Settings:
     #CSV file path
     csv_file_path = PROJECT_ROOT / "data" / "books.csv"
 
+
+    #embeddings pickle file path
+    EMBEDDINGS_FILE = PROJECT_ROOT / "data" / "embeddings.pkl"
+
+
     #API key configuration
     api_key = os.getenv("GOOGLE_API_KEY") 
     
+
     #model configuration
     EMBEDDING_MODEL = "models/text-embedding-004"
     GENERATION_MODEL = "models/gemini-1.5-flash"
