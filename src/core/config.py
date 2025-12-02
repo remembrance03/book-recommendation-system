@@ -21,6 +21,7 @@ class Settings:
     #SQLite database path
     DB_PATH: Path = PROJECT_ROOT / "data" / "books.db"
 
+
     #CSV file path
     csv_file_path : Path = PROJECT_ROOT / "data" / "books.csv"
 
@@ -37,6 +38,9 @@ class Settings:
     GENERATION_MODEL = "models/gemini-1.5-flash"
     SUMMARY_MODEL = "models/gemini-1.5-flash-8b"
 
+
+    #ChromaDB path
+    CHROMA_PATH: Path = PROJECT_ROOT / "data" / "chroma_db"
     
 
 # Create a singleton instance
