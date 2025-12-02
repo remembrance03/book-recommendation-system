@@ -23,15 +23,14 @@ class Settings:
     DB_PATH: Path = PROJECT_ROOT / "data" / "books.db"
 
     #CSV file path
-    csv_file_path = PROJECT_ROOT / "data" / "books.csv"
+    csv_file_path : Path = PROJECT_ROOT / "data" / "books.csv"
 
 
     #embeddings pickle file path
-    EMBEDDINGS_FILE = PROJECT_ROOT / "data" / "embeddings.pkl"
-
+    EMBEDDINGS_FILE: Path = PROJECT_ROOT / "data" / "embeddings.pkl"
 
     #API key configuration
-    api_key = os.getenv("GOOGLE_API_KEY") 
+    api_key: str | None = os.getenv("GOOGLE_API_KEY") 
     
 
     #model configuration
