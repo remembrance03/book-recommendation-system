@@ -1,21 +1,26 @@
-import chromadb
+###optional
+#For generating embeddings and book_texts everysingle time we run this file, we would have to run generating_embeddings.py
 #from generating_embeddings import embeddings, book_texts  
+###
 
 #to import embeddings saved as a pickle file(locally); doesnt run generating_embeddings.py again and again :)
 import pickle
-#loading saved embeddings and texts
-with open("embeddings.pkl", "rb") as f:
-    saved_data = pickle.load(f)
+from src.core.config import settings #for getting EMBEDDINGS_FILE path
 
+#loading saved embeddings and texts
+from src.utils.open_picklefile import load_pickle
+saved_data = load_pickle()
+
+#extracting embeddings and book_texts from the loaded pickle data
 vector = [emb[1] for emb in saved_data["embeddings"]]  #extracting only the vectors  
 book_texts = book_texts = [text for (_, text) in saved_data["titles"]]    #only the string text from (id, text) tuples
 
 
-client = chromadb.PersistentClient(path="chroma_db") #creating a persistent client that saves the vector database to a folder named chroma_db (if db doesnt exists)
-                                                    #persistentClient ensures your vector database is saved and can be reopened later
+#chromadb client connection and collection creation
+from src.core.chromadb_connection import get_collection 
 
-collection = client.get_or_create_collection(name="books") #creates collection named books and if already exists it retrieves it
 
+collection = get_collection("books")  #creates collection named books and if already exists it retrieves it
 
 
 storing=collection.add(
