@@ -9,7 +9,6 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
-
 class Settings:
     #project paths
     PROJECT_ROOT: Path = PROJECT_ROOT

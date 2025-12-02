@@ -91,7 +91,7 @@ def recommend_books(user_query, top_k=5, similarity_threshold=1.0):   #top_k: nu
         if dist <= similarity_threshold:
             recommended.append((docs[i], dist))
 
-    # Sort by distance (closest first) using basic loops
+    # Sort by distance (closest first)
     for i in range(len(recommended)):
         for j in range(len(recommended) - i - 1):
             if recommended[j][1] > recommended[j + 1][1]:
