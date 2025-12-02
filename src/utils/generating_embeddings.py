@@ -29,7 +29,7 @@ def generate_embeddings():
 ###
 #saving in pickle files for later use(locally)
 ###
-def save_embeddings():
+def save_embeddings(embeddings):
     import pickle
     from src.core.config import settings
 
