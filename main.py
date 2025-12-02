@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from modulefinder import test
 import pickle
 import chromadb
@@ -111,6 +112,9 @@ def recommend_books(user_query, top_k=5, similarity_threshold=1.0):   #top_k: nu
     return recommended_books
 
 
+=======
+from src.services.recommendation import recommend_books
+>>>>>>> Stashed changes
 ###
 #executing...
 ###
