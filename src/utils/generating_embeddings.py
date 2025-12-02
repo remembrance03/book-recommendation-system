@@ -1,7 +1,6 @@
 ####
 #generating embeddings for the prepared book texts
 ###
-from openai import embeddings
 from src.core.config import settings  #importing settings instance from config.py
 import google.generativeai as genai
 from src.utils.prepare_books import load_books_for_embedding
