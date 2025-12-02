@@ -9,7 +9,6 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
-@lru_cache()
 class Settings:
     #project paths
     PROJECT_ROOT: Path = PROJECT_ROOT
@@ -30,7 +29,7 @@ class Settings:
     EMBEDDINGS_FILE: Path = PROJECT_ROOT / "data" / "embeddings.pkl"
 
     #API key configuration
-    api_key: str | None = os.getenv("GOOGLE_API_KEY") 
+    api_key: str = os.getenv("GOOGLE_API_KEY") 
     
 
     #model configuration
