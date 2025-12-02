@@ -15,6 +15,6 @@ while True:
     print("\nthese are some books you might enjoy reading :) \n")
     for result in recommendations:
         print ("-", result,"\n")
-
+        
     print("happy reading!!!")
     print("-----------------------------------------------------------------")
