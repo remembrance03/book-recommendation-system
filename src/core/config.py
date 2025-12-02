@@ -9,7 +9,7 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
-@lru_cache()
+
 class Settings:
     #project paths
     PROJECT_ROOT: Path = PROJECT_ROOT
@@ -22,6 +22,7 @@ class Settings:
     #SQLite database path
     DB_PATH: Path = PROJECT_ROOT / "data" / "books.db"
 
+
     #CSV file path
     csv_file_path : Path = PROJECT_ROOT / "data" / "books.csv"
 
@@ -30,7 +31,7 @@ class Settings:
     EMBEDDINGS_FILE: Path = PROJECT_ROOT / "data" / "embeddings.pkl"
 
     #API key configuration
-    api_key: str | None = os.getenv("GOOGLE_API_KEY") 
+    api_key: str = os.getenv("GOOGLE_API_KEY") 
     
 
     #model configuration
@@ -38,6 +39,9 @@ class Settings:
     GENERATION_MODEL = "models/gemini-1.5-flash"
     SUMMARY_MODEL = "models/gemini-1.5-flash-8b"
 
+
+    #ChromaDB path
+    CHROMA_PATH: Path = PROJECT_ROOT / "data" / "chroma_db"
     
 
 # Create a singleton instance
