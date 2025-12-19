@@ -20,8 +20,8 @@ The system uses an embedding-based semantic similarity approach, where book desc
 1. Clone the repository
    
    ```
-   git clone https://github.com/remembrance03/book-recommendation-system.git
-   cd book-recommendation-system
+   git clone https://github.com/remembrance03/the-LibQuery.git
+   cd the-LibQuery
    ```
 2. Install dependencies
    
